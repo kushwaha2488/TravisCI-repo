@@ -25,7 +25,7 @@ script:
 
 after_success:
 - docker login -u ${DHUB_USERNAME} -p ${DHUB_PASS}
-- echo "${SSH_KEY}" |  base64 --decode > /tmp/ssh_rsa
+- echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCHtelBIILDb0nuDKEZO6YAAV1QN5qRUvz43zcbF5KHQPSL3eTXDw6bUDmsWn0MxoblZ/M4lpD02VSt2696r37MQ1E4HTx0oq6A2ZKxYnLXm3XRNANgUuZ5S6z8MHJPNjdKQIla5et7rOBaKinOMWvKDVWT23VCiSw6IV2jAKfhEkehnBjipAtvmfj2Ros1t71qM9XHPYSqpTEq6H5HhfRxko+GWihknkygB9JrRo8ChRLmWFnIg3z2r9KLuvVqwSnCh2OTcSOXAdQ45myKVZdxbn8+LvPQG1zG16e+UWtKsEdvy8L51ZEVf1q+2oBH2tACCdUCv4EsC9oe6DxWk0nh imported-openssh-key" |  base64 --decode > /tmp/ssh_rsa
 - chmod 600 /tmp/ssh_rsa
 - ssh -o "StrictHostKeyChecking no" ec2-user@${IPADDR} -i /tmp/ssh_rsa "echo test > test.log"
 - ssh -o "StrictHostKeyChecking no" ec2-user@${IPADDR} -i /tmp/ssh_rsa "cd ${INSTALL_LOCATION} && git pull ${TRAVIS_BUILD_WEB_URL} && docker image build -t ${IMGNAME} ${INSTALL_LOCATION}/. && docker push ${IMGNAME} && docker stop discordbot; docker rm discordbot; 
