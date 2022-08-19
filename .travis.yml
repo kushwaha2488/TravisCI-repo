@@ -11,6 +11,8 @@ deploy:
    default_region: $AWS_Default_Region
    bucket: travisbkt
    skip_cleanup: true
+   on:
+    branch: main
    
 services:
   - docker
